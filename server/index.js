@@ -1,4 +1,6 @@
-import { createServer } from 'http';
+import express from 'express';
+
+const app = express();
 
 let notes = [
   {
@@ -18,9 +20,12 @@ let notes = [
   },
 ];
 
-const app = createServer((req, res) => {
-  res.writeHead(200, { 'content-type': 'text/plain' });
-  res.end(JSON.stringify(notes));
+app.get('/', (req, res) => {
+  res.send('<h1>Hello, World</h1>');
+});
+
+app.get('/api/notes', (req, res) => {
+  res.json(notes);
 });
 
 const PORT = 3001;
