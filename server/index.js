@@ -1,8 +1,10 @@
 import express from 'express';
+import cors from 'cors';
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 let notes = [
   {
@@ -44,6 +46,25 @@ app.delete('/api/notes/:id', (req, res) => {
   const { id } = req.params;
   notes = notes.filter((note) => note.id !== id);
   res.status(204);
+});
+
+app.put('/api/notes/:id', (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+
+  const noteIndex = notes.findIndex((n) => n.id === id);
+  if (noteIndex === -1) {
+    return res.status(404).json({ error: 'Note not found' });
+  }
+
+  const updatedNote = {
+    ...notes[noteIndex],
+    content: body.content,
+    important: body.important,
+  };
+
+  notes[noteIndex] = updatedNote;
+  res.json(updatedNote);
 });
 
 const generateId = () => {
