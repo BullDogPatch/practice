@@ -1,5 +1,6 @@
-import express from 'express';
-import cors from 'cors';
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
 
 const app = express();
 
@@ -34,12 +35,7 @@ app.get('/api/notes', (req, res) => {
 
 app.get('/api/notes/:id', (req, res) => {
   const { id } = req.params;
-  const note = notes.find((n) => n.id === id);
-  if (note) {
-    res.json(note);
-  } else {
-    res.status(404).end();
-  }
+  N;
 });
 
 app.delete('/api/notes/:id', (req, res) => {
